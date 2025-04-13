@@ -12,7 +12,7 @@ app = FastAPI()
 app.include_router(api_router, prefix="/api/auth", tags=["Auth"])
 
 
-@app.get("/users")
+@app.get("/users", status_code=200)
 async def get_users(db: Session = Depends(get_db)):
     items = db.query(models.User).all()
     return {"users": items}
