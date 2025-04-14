@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from main import app
 from database import Base, get_db
 import pytest
+import logging
 
 client = TestClient(app)
 
