@@ -37,9 +37,9 @@ def teardown() -> None:
     Base.metadata.drop_all(bind=engine)
 
 
-@pytest.fixture(scope="session", autouse=True)  # Use pytest fixture
+@pytest.fixture(scope="session", autouse=True)
 def setup_test_database():
     """Sets up and tears down the database for testing."""
-    setup()  # Create tables
-    yield  # Run the tests
-    teardown()  # Drop tables
+    setup()
+    yield
+    teardown()
