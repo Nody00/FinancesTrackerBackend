@@ -8,8 +8,14 @@ class UserBase(BaseModel):
     email: EmailStr
 
 
-class UserCreate(UserBase):
-    password: str
+class UserCreate(BaseModel):
+    password: str = Field(
+        min_length=8, description="Password must be a minimum of 8 characters"
+    )
+    username: str = Field(
+        min_length=5, description="Username must be a minimum of 5 characters long"
+    )
+    email: EmailStr
 
     class Config:
         json_schema_extra = {
@@ -36,7 +42,7 @@ class UserResponse(BaseModel):
     id: int
     username: str
     created_at: datetime
-    email: str
+    email: EmailStr
 
 
 class UserLoginPayload(BaseModel):

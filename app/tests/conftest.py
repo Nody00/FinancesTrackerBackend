@@ -1,10 +1,15 @@
+import sys
+import os
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, StaticPool
 from sqlalchemy.orm import sessionmaker
 from main import app
 from database import Base, get_db
 import pytest
-import logging
 
 client = TestClient(app)
 
@@ -38,8 +43,3 @@ def setup_test_database():
     setup()  # Create tables
     yield  # Run the tests
     teardown()  # Drop tables
-
-
-def test_read_users():
-    response = client.get("/users")
-    assert response.status_code == 200
