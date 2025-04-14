@@ -39,5 +39,4 @@ def test_creates_user_when_params_valid():
         "username": "test username",
     }
     response = client.post("/api/auth/signup", json=payload)
-    logging.warning(response)
     assert response.status_code == 201

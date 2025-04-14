@@ -47,7 +47,7 @@ async def sign_up(user: UserCreate, db: Session = Depends(get_db)):
         db.close()
 
 
-@router.post("login", response_model=LoginResponse, status_code=200)
+@router.post("/login", response_model=LoginResponse, status_code=200)
 async def login(payload: UserLoginPayload, db: Session = Depends(get_db)):
     """
     Endpoint for logging in.
