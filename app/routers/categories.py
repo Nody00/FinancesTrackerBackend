@@ -19,7 +19,7 @@ user_dependency = Annotated[dict, Depends(get_current_user)]
 # DELETE /api/categories/{id} - Delete a category
 
 
-@router.get("/")
+@router.get("/", status_code=200)
 async def get(
     user: user_dependency,
     db: Session = Depends(get_db),

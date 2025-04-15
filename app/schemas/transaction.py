@@ -11,10 +11,22 @@ class TransactionBase(BaseModel):
     category_id: Optional[int] = None
     description: Optional[str] = None
     type: str  # 'income' or 'expense'
+    user_id: int
 
 
 class TransactionCreate(TransactionBase):
-    user_id: int  # Or get from token
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "amount": 23.232,
+                "date": "01/02/2000",
+                "category_id": 1,
+                "description": "Test description",
+                "type": "income",
+                "user_id": 1,
+            }
+        }
 
 
 class TransactionUpdate(TransactionBase):
