@@ -56,17 +56,17 @@ async def login(payload: UserLoginPayload, db: Session = Depends(get_db)):
     - Return a jwt token along with user data
     """
 
-    user = db.query(User).filter(User.email == payload.email).first()
+    user = db.query(User).filter(User.username == payload.username).first()
 
     if not user:
-        raise HTTPException(status_code=404, detail="Email or password are invalid")
+        raise HTTPException(status_code=404, detail="Username or password are invalid")
 
     is_password_valid = bcrypt.checkpw(
         payload.password.encode("utf-8"), user.password_hash.encode("utf-8")
     )
 
     if not is_password_valid:
-        raise HTTPException(status_code=404, detail="Email or password are invalid")
+        raise HTTPException(status_code=404, detail="Username or password are invalid")
 
     serialized_user = {
         "id": user.id,

@@ -46,7 +46,7 @@ class UserResponse(BaseModel):
 
 
 class UserLoginPayload(BaseModel):
-    email: EmailStr
+    username: str
     password: str = Field(
         min_length=8, description="Password must be a minimum of 8 characters"
     )
@@ -54,7 +54,7 @@ class UserLoginPayload(BaseModel):
     class Config:
         json_schema_extra = {
             "example": {
-                "email": "shiredude@gmail.com",
+                "username": "bilboBagins311",
                 "password": "theonering",
             }
         }
