@@ -10,6 +10,7 @@ from sqlalchemy.orm import sessionmaker
 from main import app
 from database import Base, get_db
 import pytest
+from fastapi import HTTPException
 
 client = TestClient(app)
 
@@ -24,6 +25,14 @@ def override_get_db():
     database = TestingSessionLocal()
     yield database
     database.close()
+
+
+def override_get_authenticated_user():
+    return {"id": 1, "username": "testuser", "email": "test@mail.com"}
+
+
+def override_get_unauthenticated_user():
+    raise HTTPException(status_code=401, detail="Not authenticated")
 
 
 app.dependency_overrides[get_db] = override_get_db
