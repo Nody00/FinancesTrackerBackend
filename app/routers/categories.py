@@ -20,7 +20,7 @@ user_dependency = Annotated[dict, Depends(get_current_user)]
 
 
 @router.get("/")
-async def get_categories(
+async def get(
     user: user_dependency,
     db: Session = Depends(get_db),
     skip: int | None = None,
@@ -53,7 +53,7 @@ async def get_categories(
 
 
 @router.post("/", status_code=201)
-async def create_categorie(
+async def create(
     payload: CategoryCreate, user: user_dependency, db: Session = Depends(get_db)
 ):
     db_category = Category(name=payload.name, user_id=user.get("id"))
@@ -61,3 +61,18 @@ async def create_categorie(
     db.commit()
     db.refresh(db_category)
     return db_category
+
+
+@router.delete("/{id}", status_code=200)
+async def delete(id: int, user: user_dependency, db: Session = Depends(get_db)):
+    db_category = db.query(Category).filter(Category.id == id).first()
+
+    if not db_category:
+        raise HTTPException(status_code=404, detail="Category not found")
+
+    if db_category.user_id != user.get("id"):
+        raise HTTPException(status_code=403, detail="Not authorized to delete this")
+
+    db.delete(db_category)
+    db.commit()
+    return {"message": f"Category {id} deleted!"}
