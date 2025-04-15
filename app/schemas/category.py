@@ -9,7 +9,14 @@ class CategoryBase(BaseModel):
 
 
 class CategoryCreate(CategoryBase):
-    user_id: int  # Or consider excluding this and getting it from the token
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "name": "Category 1",
+                "icon": "test",
+            }
+        }
 
 
 class CategoryUpdate(CategoryBase):
