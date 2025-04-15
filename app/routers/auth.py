@@ -7,6 +7,8 @@ from sqlalchemy.exc import IntegrityError
 import bcrypt
 import jwt
 from datetime import datetime, timedelta
+from typing import Annotated
+from fastapi.security import OAuth2PasswordRequestForm
 
 router = APIRouter()
 
@@ -48,7 +50,10 @@ async def sign_up(user: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.post("/login", response_model=LoginResponse, status_code=200)
-async def login(payload: UserLoginPayload, db: Session = Depends(get_db)):
+async def login(
+    payload: Annotated[OAuth2PasswordRequestForm, Depends()],
+    db: Session = Depends(get_db),
+):
     """
     Endpoint for logging in.
     - Receives email and password

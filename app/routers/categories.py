@@ -7,10 +7,13 @@ from sqlalchemy.exc import IntegrityError
 import bcrypt
 import jwt
 from datetime import datetime, timedelta
-
+from typing import Annotated
+from utils import get_current_user
+import logging
 
 router = APIRouter()
 
+user_dependency = Annotated[dict, Depends(get_current_user)]
 
 # Categories
 # GET /api/categories - List all categories
@@ -19,5 +22,6 @@ router = APIRouter()
 
 
 @router.get("/")
-async def get_categories():
+async def get_categories(user: user_dependency):
+    logging.warning(user)
     return {"message": "nothing"}

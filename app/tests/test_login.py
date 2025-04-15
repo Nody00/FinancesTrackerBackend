@@ -10,7 +10,7 @@ def create_user_helper(username: str, email: str, password: str):
 def test_returns_error_when_invalid_username():
     payload = {"username": "", "password": "password123"}
     response = client.post("/api/auth/login", json=payload)
-    assert response.status_code == 404
+    assert response.status_code == 422
 
 
 def test_returns_error_when_invalid_password():
@@ -22,7 +22,7 @@ def test_returns_error_when_invalid_password():
 def test_returns_error_if_user_does_not_exist():
     payload = {"username": "test123123", "password": "testpassword123"}
     response = client.post("/api/auth/login", json=payload)
-    assert response.status_code == 404
+    assert response.status_code == 422
 
 
 def test_returns_token_and_user_when_payload_valid():
@@ -40,7 +40,7 @@ def test_returns_token_and_user_when_payload_valid():
         "username": dummy_user_data["username"],
         "password": dummy_user_data["password"],
     }
-    response = client.post("/api/auth/login", json=payload)
+    response = client.post("/api/auth/login", data=payload)
     parsed_response = response.json()
     assert response.status_code == 200
 
