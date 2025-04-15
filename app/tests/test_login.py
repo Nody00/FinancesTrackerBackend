@@ -44,19 +44,5 @@ def test_returns_token_and_user_when_payload_valid():
     parsed_response = response.json()
     assert response.status_code == 200
 
-    assert "token" in parsed_response
-    assert isinstance(parsed_response["token"], str)
-    assert "user" in parsed_response
-    assert isinstance(parsed_response["user"], dict)
-
-    user_data = parsed_response["user"]
-    assert "id" in user_data
-    assert isinstance(user_data["id"], int)
-
-    assert "email" in user_data
-    assert isinstance(user_data["email"], str)
-    assert user_data["email"] == dummy_user_data["email"]
-
-    assert "username" in user_data
-    assert isinstance(user_data["username"], str)
-    assert user_data["username"] == dummy_user_data["username"]
+    assert "access_token" in parsed_response
+    assert isinstance(parsed_response["access_token"], str)

@@ -49,7 +49,7 @@ async def sign_up(user: UserCreate, db: Session = Depends(get_db)):
         db.close()
 
 
-@router.post("/login", response_model=LoginResponse, status_code=200)
+@router.post("/login")
 async def login(
     payload: Annotated[OAuth2PasswordRequestForm, Depends()],
     db: Session = Depends(get_db),
@@ -85,6 +85,6 @@ async def login(
 
     jwt_payload = {"userData": serialized_user, "expires_at": float_timestamp}
 
-    encoded_payload = jwt.encode(jwt_payload, SECRET_KEY, algorithm=ALGORITHM)
+    token = jwt.encode(payload=jwt_payload, key=SECRET_KEY, algorithm=ALGORITHM)
 
-    return {"token": encoded_payload, "user": serialized_user}
+    return {"access_token": token, "token_type": "bearer"}

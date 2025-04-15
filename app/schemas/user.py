@@ -69,4 +69,3 @@ class UserInfo(BaseModel):
 
 class LoginResponse(BaseModel):
     token: str
-    user: UserInfo
